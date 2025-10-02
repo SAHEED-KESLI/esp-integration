@@ -1,4 +1,4 @@
-<p align="center">
+<!-- <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
@@ -21,7 +21,7 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<!-- ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
@@ -95,4 +95,25 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE). --> -->
+
+# ESP Integration Backend (Mailchimp & GetResponse)
+
+Small NestJS + Prisma REST API to store and validate Mailchimp and GetResponse API keys
+and fetch lists/campaigns.
+
+## Features
+
+- POST `/api/integrations/esp` — save & validate provider API key
+- GET `/api/integrations/esp/lists` — fetch lists/campaigns for a saved integration
+- Input validation, consistent responses, improved error mapping for network/rate-limit/timeouts
+- Prisma + Postgres storage
+
+## Quickstart (local)
+
+1. Clone
+
+```bash
+git clone <your-repo-url>
+cd esp-integration
+```

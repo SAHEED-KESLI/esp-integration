@@ -4,6 +4,8 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,6 +37,21 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  // Global validation
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // remove unknown props
+      forbidNonWhitelisted: true, // throw on extra props
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
+
+  // Global response format interceptor
+  app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // Global exception filter
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   const port = configService.get<string>('PORT') || '3000';
   //
