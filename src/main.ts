@@ -53,9 +53,9 @@ async function bootstrap() {
   // Global exception filter
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  const port = configService.get<string>('PORT') || '3000';
-  //
-  await app.listen(port, '0.0.0.0');
+  const port = configService.get<string>('PORT') || '3004';
+  console.log(port);
+  await app.listen(port);
 }
 
 bootstrap();
