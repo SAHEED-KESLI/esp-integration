@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": { "@": ["src"], "test/*": ["test/*"] },
+    "moduleResolution": "node16", // modern Node-style resolution
+    "paths": {
+      "@/*": ["./src/*"], // keep paths for TS tooling (optional)
+      "test/*": ["./test/*"]
+    },
 
     "module": "commonjs",
     "target": "ES2021",
@@ -13,7 +16,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
 
-    "types": ["node", "jest"], // 👈 add jest here
+    "types": ["node", "jest"],
     "lib": ["es2021"],
 
     "skipLibCheck": true,
