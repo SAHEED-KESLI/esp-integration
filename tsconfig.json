@@ -1,25 +1,27 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "baseUrl": "./",
+    "paths": { "@": ["src"], "test/*": ["test/*"] },
+
+    "module": "commonjs",
+    "target": "ES2021",
+    "outDir": "./dist",
+    "sourceMap": true,
     "declaration": true,
-    "removeComments": true,
+    "incremental": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
+
+    "types": ["node", "jest"], // 👈 add jest here
+    "lib": ["es2021"],
+
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "*.ts"]
 }
