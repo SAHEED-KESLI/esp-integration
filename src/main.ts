@@ -15,12 +15,12 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const isProduction = configService.get<string>('NODE_ENV') === 'production';
 
-  // Determine GraphQL endpoint (optional: used if passed to frontend/docs)
+  // Optional GraphQL endpoint
   const graphqlUrl = isProduction
     ? configService.get<string>('GRAPHQL_URL_PROD')
     : configService.get<string>('GRAPHQL_URL_DEV');
 
-  // Enable CORS (can be restricted further in production)
+  // Enable CORS (restrict in prod if needed)
   app.enableCors({
     origin: isProduction ? configService.get<string>('CORS_ORIGIN') : '*',
     credentials: true,
@@ -29,8 +29,10 @@ async function bootstrap() {
   // Global API prefix
   app.setGlobalPrefix('api');
 
-  // Swagger setup (only enabled outside production)
-  if (!isProduction) {
+  // ✅ Swagger setup (enabled in both dev & production if ENABLE_SWAGGER=true)
+  const enableSwagger =
+    configService.get<string>('ENABLE_SWAGGER') === 'true' || !isProduction;
+  if (enableSwagger) {
     const config = new DocumentBuilder()
       .setTitle('ESP-INTEGRATION API')
       .setDescription('API documentation for ESP-INTEGRATION service')
@@ -45,9 +47,9 @@ async function bootstrap() {
   // Global validation pipes
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // strip unknown properties
-      forbidNonWhitelisted: true, // throw error on extra properties
-      transform: true, // auto-transform payloads
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
       transformOptions: { enableImplicitConversion: true },
     }),
   );
@@ -60,12 +62,13 @@ async function bootstrap() {
 
   // Start server
   const port = configService.get<number>('PORT') || 3004;
-
   await app.listen(port, '0.0.0.0');
 
   console.log(`🚀 Server running on http://localhost:${port}/api`);
-  if (!isProduction) {
+  if (enableSwagger) {
     console.log(`📖 Swagger docs available at http://localhost:${port}/docs`);
+  }
+  if (!isProduction) {
     console.log(`🔗 GraphQL endpoint: ${graphqlUrl}`);
   }
 }
